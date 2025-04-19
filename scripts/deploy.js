@@ -17,19 +17,17 @@ async function main() {
 
 function updateEnvFile(contractAddress) {
   const envFilePath = "./.env";
-  const newEnvContent = `VITE_CONTRACT_ADDRESS=${contractAddress}\n`;
+  let envContent = "";
 
-  // Read the current .env file (if exists) and append the contract address
-  fs.readFile(envFilePath, 'utf8', (err, data) => {
-    if (err) {
-      console.log("Could not read .env file, creating a new one.");
-      fs.writeFileSync(envFilePath, newEnvContent);
-    } else {
-      const newContent = data + newEnvContent;
-      fs.writeFileSync(envFilePath, newContent);
-    }
-  });
+  if (fs.existsSync(envFilePath)) {
+    envContent = fs.readFileSync(envFilePath, "utf8");
+    envContent = envContent.replace(/VITE_CONTRACT_ADDRESS=.*/g, "");
+  }
+
+  envContent += `\nVITE_CONTRACT_ADDRESS=${contractAddress}\n`;
+  fs.writeFileSync(envFilePath, envContent.trim());
 }
+
 
 main()
   .then(() => process.exit(0))

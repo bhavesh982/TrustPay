@@ -1,18 +1,23 @@
-// Dashboard.jsx
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 
 const contractABI = [
-  "function getCounter() public view returns (uint256)",
-  "function getDeal(uint dealId) public view returns (address buyer, address seller, uint amount, bool isConfirmed, bool isRefunded)",
+  "function getDeal(uint dealId) public view returns (address seller, uint amount, uint status, uint8)",
   "function confirmDelivery(uint dealId) public",
   "function refund(uint dealId) public",
+  "function dealCounter() public view returns (uint256)"
 ];
 
 const Dashboard = () => {
   const [deals, setDeals] = useState([]);
   const [contract, setContract] = useState(null);
   const [dealCounter, setDealCounter] = useState(0);
+
+  const getStatusText = (status) => {
+    if (status === 1) return 'Delivered';
+    if (status === 2) return 'Refunded';
+    return 'Pending';
+  };
 
   const fetchDeals = async () => {
     try {
@@ -22,7 +27,7 @@ const Dashboard = () => {
       const escrowContract = new ethers.Contract(contractAddress, contractABI, signer);
       setContract(escrowContract);
 
-      const totalDeals = await escrowContract.getCounter();
+      const totalDeals = await escrowContract.dealCounter();
       setDealCounter(totalDeals.toNumber());
 
       const dealData = [];
@@ -30,11 +35,9 @@ const Dashboard = () => {
         const deal = await escrowContract.getDeal(dealId);
         dealData.push({
           dealId,
-          buyer: deal.buyer,
           seller: deal.seller,
           amount: ethers.utils.formatEther(deal.amount),
-          isConfirmed: deal.isConfirmed,
-          isRefunded: deal.isRefunded,
+          status: parseInt(deal.status),
         });
       }
 
@@ -52,7 +55,7 @@ const Dashboard = () => {
     if (contract) {
       await contract.confirmDelivery(dealId);
       alert(`Confirmed delivery for deal ID ${dealId}`);
-      fetchDeals(); // Refresh data
+      fetchDeals();
     }
   };
 
@@ -60,7 +63,7 @@ const Dashboard = () => {
     if (contract) {
       await contract.refund(dealId);
       alert(`Refunded deal ID ${dealId}`);
-      fetchDeals(); // Refresh data
+      fetchDeals();
     }
   };
 
@@ -72,7 +75,6 @@ const Dashboard = () => {
           <thead>
             <tr className="border-b">
               <th className="px-4 py-2 text-left">Deal ID</th>
-              <th className="px-4 py-2 text-left">Buyer</th>
               <th className="px-4 py-2 text-left">Seller</th>
               <th className="px-4 py-2 text-left">Amount (ETH)</th>
               <th className="px-4 py-2 text-left">Status</th>
@@ -83,14 +85,11 @@ const Dashboard = () => {
             {deals.map((deal) => (
               <tr key={deal.dealId}>
                 <td className="px-4 py-2">{deal.dealId}</td>
-                <td className="px-4 py-2">{deal.buyer}</td>
                 <td className="px-4 py-2">{deal.seller}</td>
                 <td className="px-4 py-2">{deal.amount}</td>
+                <td className="px-4 py-2">{getStatusText(deal.status)}</td>
                 <td className="px-4 py-2">
-                  {deal.isRefunded ? 'Refunded' : deal.isConfirmed ? 'Confirmed' : 'Pending'}
-                </td>
-                <td className="px-4 py-2">
-                  {!deal.isRefunded && !deal.isConfirmed && (
+                  {deal.status === 0 && (
                     <>
                       <button
                         onClick={() => confirmDeal(deal.dealId)}
