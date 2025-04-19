@@ -53,17 +53,31 @@ const Dashboard = () => {
 
   const confirmDeal = async (dealId) => {
     if (contract) {
-      await contract.confirmDelivery(dealId);
-      alert(`Confirmed delivery for deal ID ${dealId}`);
-      fetchDeals();
+      try{
+        const tx = await contract.confirmDelivery(dealId);
+        await tx.wait();
+        alert(`Confirmed delivery for deal ID ${dealId}`);
+        fetchDeals();
+      }
+      catch(error){
+        console.error("Transaction failed: ", error);
+        alert("Transaction failed");
+      }
     }
   };
 
   const refundDeal = async (dealId) => {
     if (contract) {
-      await contract.refund(dealId);
-      alert(`Refunded deal ID ${dealId}`);
-      fetchDeals();
+      try{
+        const tx = await contract.refund(dealId);
+        await tx.wait();
+        alert(`Refunded deal ID ${dealId}`);
+        fetchDeals();
+      }
+      catch(error){
+        console.error("Refund failed: ", error);
+        alert("Refund failed");
+      }
     }
   };
 

@@ -70,19 +70,7 @@ function App() {
           <button onClick={handleCreateEscrow}>Create Escrow</button>
         </div>
       )}
-
-      <div>
-        <input
-          type="text"
-          placeholder="Enter Deal ID"
-          onChange={(e) => setDealId(e.target.value)}
-        />
-        <button onClick={() => getDeal(dealId)}>Get Deal</button>
-        <button onClick={() => confirmDelivery(dealId)}>Confirm Delivery</button>
-        <button onClick={() => refund(dealId)}>Refund</button>
-      </div>
-
-      <p>{escrowStatus}</p>
+      
     </div>
   );
 }
