@@ -45,6 +45,10 @@ Traditional online transactions between strangers lack trust. For example:
 - Buyer clicks “Confirm Delivery”.
 - Contract releases funds to seller automatically.
 
+### 🔁 5. Refund (If Needed)
+- If the transaction fails or is canceled, buyer can request a refund.
+- Refund can be auto-approved after timeout or manually triggered by seller.
+  
 ### 💰 Gas Fees
 - Only standard Ethereum gas fees apply.
 - TrustPay doesn’t charge anything extra.
