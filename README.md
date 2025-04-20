@@ -12,7 +12,6 @@ Traditional online transactions between strangers lack trust. For example:
 - Offering a trustless escrow mechanism using smart contracts.
 - Automating fund release based on mutual confirmation.
 - Charging no platform fees (only network gas).
-- Optionally involving an arbiter in case of disputes (hybrid model).
 
 ## 📽️ Demo Video Link:
 [Watch Demo on YouTube](https://www.youtube.com/watch?v=eMJ1dG-0XjQ&ab_channel=BhaveshKumar)
@@ -32,7 +31,7 @@ Traditional online transactions between strangers lack trust. For example:
 
 ### 🎬 1. User Connects Wallet
 - Open dApp in browser.
-- Connect MetaMask (Polygon Mumbai or Ethereum Holesky).
+- Connect MetaMask (Ethereum Holesky).
 
 ### 🧾 2. Create Escrow
 - Buyer enters seller’s address + amount.
