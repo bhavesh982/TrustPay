@@ -1,4 +1,4 @@
-# TrustPay – Hack36 Template Readme
+# TrustPay – Hack36 
 
 ![BUILT AT](https://postimage.me/images/2025/04/19/built-at-hack36.png)
 
