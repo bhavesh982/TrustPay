@@ -46,10 +46,6 @@ Traditional online transactions between strangers lack trust. For example:
 - Buyer clicks “Confirm Delivery”.
 - Contract releases funds to seller automatically.
 
-### ⏰ 5. Auto-Release Timeout (Optional)
-- If buyer doesn’t respond in X days, funds auto-release.
-- Prevents abuse of inactivity.
-
 ### 💰 Gas Fees
 - Only standard Ethereum gas fees apply.
 - TrustPay doesn’t charge anything extra.
