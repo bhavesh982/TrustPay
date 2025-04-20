@@ -1,13 +1,30 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-// main.jsx or main.tsx
-import { Buffer } from 'buffer';
-window.Buffer = Buffer;
+// src/main.jsx
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import { BrowserRouter, useNavigate } from 'react-router-dom';
+import { WalletProvider, useWallet } from './context/WalletContext';
+import './index.css';
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+const RedirectHandler = () => {
+  const { account } = useWallet();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!account) {
+      navigate('/welcome');
+    }
+  }, [account, navigate]);
+
+  return <App />;
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <WalletProvider>
+        <RedirectHandler />
+      </WalletProvider>
+    </BrowserRouter>
+  </React.StrictMode>
+);
