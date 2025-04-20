@@ -17,7 +17,7 @@ Traditional online transactions between strangers lack trust. For example:
 [Watch Demo on YouTube](https://www.youtube.com/watch?v=eMJ1dG-0XjQ&ab_channel=BhaveshKumar)
 
 ## 📎 Presentation Link:
-[PPT link here](YOUR_PRESENTATION_LINK_HERE)
+[PPT link here](https://docs.google.com/presentation/d/1vhovhB2StC2y73yAP4FlcDaQFaHNz32TeuZnkcqr5qo/edit?usp=sharing)
 
 ## 🧠 Table of Contents:
 - Introduction  
